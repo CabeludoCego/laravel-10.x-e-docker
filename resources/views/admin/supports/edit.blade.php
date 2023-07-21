@@ -13,7 +13,7 @@
 	@method('PUT')
 
 	<input type="text" name="subject" value="{{ $support->subject }}">
-	<textarea name="body" cols="30" rows="5" value="{{ $support->body }}"></textarea>
+	<textarea name="body" cols="30" rows="5">{{ $support->body }}</textarea>
 	<button type="submit">Enviar</button>
 
 </form>

@@ -16,9 +16,9 @@
 				<td>{{ $support->status }}	</td>
 				<td>{{ $support->body }}		</td>
 				<td>
-						<a href="{{ route('supports.show', $support->id) }}">
+						<a href="{{ route('supports.show', $support->id) }}">Exibir
 						</a>	
-						<a href="{{ route('supports.edit', $support->id) }}">
+						<a href="{{ route('supports.edit', $support->id) }}">Editar
 						</a>	
 				</td>
 			</tr>
