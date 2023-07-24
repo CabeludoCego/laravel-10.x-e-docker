@@ -2,47 +2,58 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DTO\CreateSupportDTO;
+use App\DTO\UpdateSupportDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUpdateSupportRequest;
 use App\Models\Support;
+use App\Services\SupportService;
 use Illuminate\Http\Request;
 
 class SupportController extends Controller
 {
-    // injeção de dependência: Senão houver, cria objeto Support para usar.
-    public function index(Support $support){
+    public function __construct(
+        protected SupportService $service) { }
 
-        $supports = $support->all();    // collection
 
-        return view('admin/supports/index',
-            ['supports' => $supports]
-        );
+    public function index(Request $request){
+
+        $supports = $this->service->getAll($request->filter);
+        dd($supports);
+        return view('admin/supports/index', compact('supports'));
     }
+
+
+    public function show(string $id) {
+        if (!$support  = $this->service->findOne($id)){
+            return back();
+        };
+        
+        return view('admin.supports.show', compact('support'));
+    }
+
 
     public function create() {
         return view('admin/supports/create');
     }
 
+    
     public function store(StoreUpdateSupportRequest $request, Support $support) {
-                
-        // dd($request->only(['subject', 'body']));
-        // dd($request->body);
-        // dd($request->get('body', 'default', 'xpto'));
         
-        $data = $request->validated();
-        $data['status'] = 'a';
+        $this->service->new(
+            CreateSupportDTO::makeFromRequest($request)
+        );
 
-        // // ** Criação estática: Só com request
-        // Support::create($data);
+        // $data = $request->validated();
+        // $data['status'] = 'a';
+        // $support->create($data);
         
-        // // ** Criação dinâmica: Injeta um Support $support
-        $support->create($data);
         return redirect()->route('supports.index');
     }
 
     
-    public function edit(Request $request,Support $support,string|int $id){
-        if (!$support  = $support->find($id)){
+    public function edit(string $id){
+        if (!$support  = $this->service->findOne($id)){
             return back();
         };
         return view('admin/supports.edit', compact('support'));
@@ -50,39 +61,29 @@ class SupportController extends Controller
 
 
     public function update (StoreUpdateSupportRequest $request,Support $support,string|int $id){
-        if (!$support  = $support->find($id)){
+        
+        $support = $this->service->update(
+            UpdateSupportDTO::makeFromRequest($request)
+        );
+        
+        if (!$support){
             return back();
         };
 
         // $support->update($request->only([
-        //     'subject', 'body', 'status']));
-        $support->update($request->validated());
-    
+        //     'subject', 'body', 'status']));    
 
         return view('admin/supports.edit', compact('support'));
     }
 
 
-    public function destroy (string|int $id) {
-        if (!$support  =  Support::find($id)){
-            return back();
-        };
-        $support->delete();
+    public function destroy (string $id) {
 
+        $this->service->delete($id);
+        
         return redirect()->route('supports.index');
 
     }
-
-    
-    public function show(string|int $id) {
-        // se não existe, ou é nulo:
-        if (!$support  = Support::find($id)){
-            return back();
-        };
-        
-        return view('admin.supports.show', compact('support'));
-    }
-
 
 
 }
