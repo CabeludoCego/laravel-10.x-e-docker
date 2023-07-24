@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO;
+namespace App\DTOs;
 
 use App\Http\Requests\StoreUpdateSupportRequest;
 
@@ -15,7 +15,7 @@ class CreateSupportDTO
 	}
 	
 
-	public function makeFromRequest(StoreUpdateSupportRequest $request)
+	public static function makeFromRequest(StoreUpdateSupportRequest $request) : self
 	{
 		return new self(
 			$request->subject,

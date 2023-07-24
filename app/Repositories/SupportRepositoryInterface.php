@@ -2,8 +2,8 @@
 
 namespace App\Repositories;
 
-use App\DTO\CreateSupportDTO;
-use App\DTO\UpdateSupportDTO;
+use App\DTOs\CreateSupportDTO;
+use App\DTOs\UpdateSupportDTO;
 use stdClass;
 
 interface SupportRepositoryInterface
