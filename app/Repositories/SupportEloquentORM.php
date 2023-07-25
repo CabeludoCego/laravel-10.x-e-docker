@@ -2,8 +2,8 @@
 
 namespace App\Repositories;
 
-use App\DTOs\CreateSupportDTO;
-use App\DTOs\UpdateSupportDTO;
+use App\DTOs\Supports\CreateSupportDTO;
+use App\DTOs\Supports\UpdateSupportDTO;
 use App\Models\Support;
 use App\Repositories\SupportRepositoryInterface;
 use stdClass;
@@ -13,7 +13,7 @@ class SupportEloquentORM implements SupportRepositoryInterface
 	public function __construct(protected Support $model) 
 	{ }
 
-	public function paginate(int $page = 1, int $totalPerPage = 10, string $filter = null): PaginationInterface  	
+	public function paginate(int $page = 1, int $totalPerPage = 1, string $filter = null): PaginationInterface  	
 	{
 		$result = $this->model
 								->where(function ($query) use ($filter) {

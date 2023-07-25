@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\SupportStatus;
 use App\Http\Controllers\Admin\SupportController;
 use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
@@ -22,9 +23,11 @@ Route::put('/supports/{id}', [SupportController::class,'update'])
 Route::delete('supports/{id}', [SupportController::class, 'destroy'])
     ->name('supports.destroy');
 
+Route::get('/test', function () {
+    dd(array_column(SupportStatus::cases(), 'name'));
+        // SupportStatus::cases());
+});
 
-
-    
 Route::get('/', function () {
     return view('welcome');
 });
