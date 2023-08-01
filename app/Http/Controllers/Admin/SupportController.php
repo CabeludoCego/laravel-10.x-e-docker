@@ -22,7 +22,7 @@ class SupportController extends Controller
         
         $supports = $this->service->paginate(
             page:         $request->get('page',1),
-            totalPerPage: $request->get('totalPerPage',1),
+            totalPerPage: $request->get('totalPerPage',5),
             filter:       $request->get('filter',null),
         );
         
@@ -53,7 +53,8 @@ class SupportController extends Controller
             CreateSupportDTO::makeFromRequest($request)
         );
 
-        return redirect()->route('supports.index');
+        return redirect()->route('supports.index')
+                        ->with('message', 'Cadastrado com sucesso!');
     }
 
     
@@ -61,7 +62,7 @@ class SupportController extends Controller
         if (!$support  = $this->service->findOne($id)){
             return back();
         };
-        return view('admin/supports.edit', compact('support'));
+        return view('admin/supports/edit', compact('support'));
     }
 
 
@@ -78,7 +79,9 @@ class SupportController extends Controller
         // $support->update($request->only([
         //     'subject', 'body', 'status']));    
 
-        return view('admin/supports.edit', compact('support'));
+        return view('admin/supports/edit', compact('support'))
+                    ->with('message', 'Atualizado com sucesso!');
+
     }
 
 
@@ -86,7 +89,8 @@ class SupportController extends Controller
 
         $this->service->delete($id);
         
-        return redirect()->route('supports.index');
+        return redirect()->route('supports.index')
+                ->with('message', 'Registro removido com sucesso!');
 
     }
 

@@ -1,5 +1,13 @@
-<h1>Detalhes da dúvida {{ $support->id }}</h1>
+@extends('admin.layouts.app')
 
+@section('title', "Detalhes da duvida {$support->subject}")
+		
+@section('header')
+	<h1 class="text-lg text-black-500">Detalhes da dúvida: {{ $support->id }}</h1>
+@endsection
+
+@section('cotnent')
+		
 <ul>
 	<li>Assunto: 		{{ $support->subject }}</li>
 	<li>Status:  		{{ $support->status  }}</li>
@@ -10,3 +18,4 @@
 <form action="{{ route('supports.destroy', $support->id) }}" method="post">
 	<x-delete-button/>	
 </form>
+@endsection

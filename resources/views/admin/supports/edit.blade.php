@@ -1,15 +1,20 @@
-<h1>Editar detalhes da dúvida {{ $support->id }}</h1>
+@extends('admin.layouts.app')
 
-<x-alert/>
+@section('title', "Editar a Dúvida {$support->subject}")
 
-<form action="{{ route('supports.update', $support->id) }}" method="post" >
-	@method('PUT')
+@section('header')
+<h1 class="text-lg text-black-500"> {{ $support->id }}</h1>
+@endsection
 
-	@include('admin.supports.partials.form', ['support' => $support])
-
+@section('content')
+<form action="{{ route('supports.update', $support->id) }}" method="POST">
+    @method('PUT')
+    @include('admin.supports.partials.form', [
+        'support' => $support
+    ])
 </form>
+@endsection
 
-<br>
-<a href="{{ route('supports.index') }}">
-	<button> <== </button>
-</a>
+<button type="submit" action="{{ route('supports.index') }}" class="bg-blue-500 hover:bg-blue-300 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
+    Deletar
+</button>
