@@ -12,7 +12,7 @@ class Support extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['subject', 'body', 'status'];
+    protected $fillable = ['subject', 'body', 'status', 'image'];
 
     public function status(): Attribute
     {

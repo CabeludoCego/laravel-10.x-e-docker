@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('subject');
             $table->enum('status', array_column(SupportStatus::cases(), 'name'));
-            // ['a', 'p', 'c']);
+            $table->string('image')->nullable();
             $table->text('body');
             $table->timestamps();
         });

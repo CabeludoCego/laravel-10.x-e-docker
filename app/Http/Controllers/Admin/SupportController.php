@@ -9,6 +9,7 @@ use App\Http\Requests\StoreUpdateSupportRequest;
 use App\Models\Support;
 use App\Services\SupportService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SupportController extends Controller
 {
@@ -87,6 +88,13 @@ class SupportController extends Controller
 
     public function destroy (string $id) {
 
+        $support_data = Support::where('id', $id)->first();
+
+        if($support_data->image && Storage::exists($support_data->image)) 
+        {
+            Storage::delete($support_data->image);
+        }
+        
         $this->service->delete($id);
         
         return redirect()->route('supports.index')

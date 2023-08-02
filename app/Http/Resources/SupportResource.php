@@ -20,7 +20,7 @@ class SupportResource extends JsonResource
             'subject' => strtoupper($this->subject),
             'content' => $this->body,
             'date_created' => Carbon::make($this->created_at)->format('Y-m-d'),
-            
+            'image' => $this->image
         ];
     }
 }

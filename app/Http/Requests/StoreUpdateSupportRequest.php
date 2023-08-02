@@ -25,14 +25,14 @@ class StoreUpdateSupportRequest extends FormRequest
         $rules = [
             'subject' => 'required|min:3|max:255|unique:supports',
             'body'    => ['required', 'min:3', 'max:10000'],
+            'image'   => ['nullable', 'image', 'max:1024'],
         ];
         if($this->method() === 'PUT' || $this->method() === 'PATCH'){
             // dd('qualquerCoisa');
             $rules = [
                 'subject' => ['required', 'min:3', 'max:255', Rule::unique('supports')->ignore($this->support ?? $this->id)],
-                // unique:supports, subject, {$this->id},id',
-
                 'body'    => ['required', 'min:3', 'max:10000'],
+                'image'   => ['nullable', 'image', 'max:1024'],
             ];
         }
 
