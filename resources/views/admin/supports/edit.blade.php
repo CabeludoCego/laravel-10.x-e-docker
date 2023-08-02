@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-<form action="{{ route('supports.update', $support->id) }}" method="POST">
+<form action="{{ route('supports.update', $support->id) }}" method="POST" enctype="multipart/form-data">
     @method('PUT')
     @include('admin.supports.partials.form', [
         'support' => $support
